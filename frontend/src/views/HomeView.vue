@@ -10,7 +10,6 @@
         :button-url="hero.button_url"
         :bg-image="hero.background"
       />
-      <ActivitySelector />
     </main>
   </div>
 </template>
@@ -21,7 +20,6 @@ import axios from 'axios'
 import AppHeader from '@/components/AppHeader.vue'
 import AppNav from '@/components/AppNav.vue'
 import HeroSection from '@/components/HeroSection.vue'
-import ActivitySelector from '@/components/ActivitySelector.vue'
 
 const hero = ref({
   title:       'МААААМ, Я\nВ КАРПАТИ',

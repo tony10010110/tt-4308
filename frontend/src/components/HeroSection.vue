@@ -83,7 +83,6 @@ function scrollTo(href) {
   align-items: flex-start;
   padding: 0 80px 80px 0;
   width: 100%;
-  max-width: 640px;
 }
 
 .hero__title {
