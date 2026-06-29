@@ -128,6 +128,13 @@
       <path value="$PROJECT_DIR$/backend/vendor/phar-io/manifest" />
       <path value="$PROJECT_DIR$/backend/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/backend/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/backend/vendor/spatie/laravel-medialibrary" />
+      <path value="$PROJECT_DIR$/backend/vendor/spatie/temporary-directory" />
+      <path value="$PROJECT_DIR$/backend/vendor/spatie/laravel-package-tools" />
+      <path value="$PROJECT_DIR$/backend/vendor/spatie/image-optimizer" />
+      <path value="$PROJECT_DIR$/backend/vendor/spatie/image" />
+      <path value="$PROJECT_DIR$/backend/vendor/laravel/sanctum" />
+      <path value="$PROJECT_DIR$/backend/vendor/maennchen/zipstream-php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.5">

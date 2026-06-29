@@ -7,32 +7,32 @@
 
     <!-- Tagline (hidden on mobile) -->
     <p class="app-header__tagline">
-      Сервіс подорожей кращими<br />місцями Карпат
+      Сервіс подорожей кращими<br/>місцями Карпат
     </p>
 
     <!-- Social links (hidden on mobile) -->
     <nav class="app-header__social" aria-label="Соціальні мережі">
       <a
-        v-for="link in socialLinks"
-        :key="link.name"
-        :href="link.url"
-        :aria-label="link.name"
-        class="app-header__social-link"
-        target="_blank"
-        rel="noopener noreferrer"
+          v-for="link in socialLinks"
+          :key="link.name"
+          :href="link.url"
+          :aria-label="link.name"
+          class="app-header__social-link"
+          target="_blank"
+          rel="noopener noreferrer"
       >
-        <img :src="link.icon" :alt="link.name" width="18" height="18" />
+        <img :src="link.icon" :alt="link.name" width="18" height="18"/>
       </a>
     </nav>
 
     <!-- Language switcher -->
     <div class="app-header__lang">
       <button
-        v-for="lang in langs"
-        :key="lang"
-        class="app-header__lang-btn"
-        :class="{ 'is-active': currentLang === lang }"
-        @click="currentLang = lang"
+          v-for="lang in langs"
+          :key="lang"
+          class="app-header__lang-btn"
+          :class="{ 'is-active': currentLang === lang }"
+          @click="currentLang = lang"
       >
         {{ lang }}
       </button>
@@ -40,45 +40,45 @@
 
     <!-- Mobile burger -->
     <button class="app-header__burger" @click="mobileOpen = !mobileOpen" aria-label="Меню">
-      <span /><span /><span />
+      <span/><span/><span/>
     </button>
 
     <!-- Mobile dropdown nav -->
     <div class="app-header__mobile-nav" :class="{ 'is-open': mobileOpen }">
       <a
-        v-for="item in navItems"
-        :key="item.label"
-        :href="item.href"
-        class="app-header__mobile-link"
-        @click="mobileOpen = false"
+          v-for="item in navItems"
+          :key="item.label"
+          :href="item.href"
+          class="app-header__mobile-link"
+          @click="mobileOpen = false"
       >{{ item.label }}</a>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 const langs = ['УКР', 'ENG']
 const currentLang = ref('УКР')
 const mobileOpen = ref(false)
 
 const navItems = [
-  { label: 'ЦІНИ',        href: '#prices' },
-  { label: 'ПРО МАУНТІ',  href: '#about' },
-  { label: 'СПОРЯДЖЕННЯ', href: '#equipment' },
-  { label: 'МАРШРУТИ',    href: '#routes' },
-  { label: 'FAQ',         href: '/faq' },
+  {label: 'ЦІНИ', href: '#prices'},
+  {label: 'ПРО МАУНТІ', href: '#about'},
+  {label: 'СПОРЯДЖЕННЯ', href: '#equipment'},
+  {label: 'МАРШРУТИ', href: '#routes'},
+  {label: 'FAQ', href: '/faq'},
 ]
 
 const socialLinks = [
-  { name: 'Instagram', url: '#', icon: '/icons/instagram.svg' },
-  { name: 'TikTok',    url: '#', icon: '/icons/tiktok.svg' },
-  { name: 'WhatsApp',  url: '#', icon: '/icons/whatsapp.svg' },
-  { name: 'Telegram',  url: '#', icon: '/icons/telegram.svg' },
-  { name: 'Twitter',   url: '#', icon: '/icons/twitter.svg' },
-  { name: 'YouTube',   url: '#', icon: '/icons/youtube.svg' },
-  { name: 'Spotify',   url: '#', icon: '/icons/spotify.svg' },
+  {name: 'Instagram', url: 'https://www.instagram.com/jamalajamalaqizi/', icon: '/icons/instagram.svg'},
+  {name: 'Facebook', url: 'https://www.facebook.com/okeanelzy', icon: '/icons/facebook.svg'},
+  {name: 'WhatsApp', url: '#', icon: '/icons/whatsapp.svg'},
+  {name: 'Telegram', url: 'https://t.me/serhiy_prytula', icon: '/icons/telegram.svg'},
+  {name: 'Twitter', url: 'https://x.com/Zelenskyy_Ua', icon: '/icons/twitter.svg'},
+  {name: 'YouTube', url: 'https://www.youtube.com/watch?v=TH-dza4AMU0', icon: '/icons/youtube.svg'},
+  {name: 'TikTok', url: 'https://www.tiktok.com/@tina.karol', icon: '/icons/tiktok.svg'},
 ]
 </script>
 

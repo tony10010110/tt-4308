@@ -88,8 +88,9 @@ function scrollTo(href) {
   width: 100%;
   height: 100vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
+  padding-top: var(--header-height);
   overflow: hidden;
 }
 
@@ -128,7 +129,7 @@ function scrollTo(href) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 150px 150px 0;
+  padding: 0 150px 0 0;
   width: 100%;
   max-width: 640px;
 }
@@ -172,6 +173,11 @@ function scrollTo(href) {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
   .hero__content {
     padding: 0 24px 60px 24px;
     max-width: 100%;
