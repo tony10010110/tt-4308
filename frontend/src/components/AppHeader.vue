@@ -72,13 +72,13 @@ const navItems = [
 ]
 
 const socialLinks = [
-  { name: 'Instagram', url: '#', icon: '/icons/instagram.svg' },
-  { name: 'TikTok',    url: '#', icon: '/icons/tiktok.svg' },
-  { name: 'WhatsApp',  url: '#', icon: '/icons/whatsapp.svg' },
-  { name: 'Telegram',  url: '#', icon: '/icons/telegram.svg' },
-  { name: 'Twitter',   url: '#', icon: '/icons/twitter.svg' },
-  { name: 'YouTube',   url: '#', icon: '/icons/youtube.svg' },
-  { name: 'Spotify',   url: '#', icon: '/icons/spotify.svg' },
+  {name: 'Instagram', url: 'https://www.instagram.com/', icon: '/icons/instagram.svg'},
+  {name: 'FaceBook', url: 'https://www.facebook.com/', icon: '/icons/facebook.svg'},
+  {name: 'WhatsApp', url: '#', icon: '/icons/whatsapp.svg'},
+  {name: 'Telegram', url: 'https://web.telegram.org/k/', icon: '/icons/telegram.svg'},
+  {name: 'Twitter', url: 'https://x.com/', icon: '/icons/twitter.svg'},
+  {name: 'YouTube', url: 'https://www.youtube.com/watch?v=TH-dza4AMU0', icon: '/icons/youtube.svg'},
+  {name: 'TikTok', url: 'https://www.tiktok.com', icon: '/icons/tiktok.svg'},
 ]
 </script>
 
