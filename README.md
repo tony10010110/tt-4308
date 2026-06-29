@@ -97,7 +97,13 @@ make test        # Запустити тести
 │   │   ├── migrations/
 │   │   └── seeders/
 │   └── routes/api.php
-├── frontend/               # Vue 3 SPA (в розробці)
+├── frontend/               # Vue 3 SPA
+│   ├── src/
+│   │   ├── components/     # AppHeader, AppNav, HeroSection, ActivitySelector
+│   │   ├── views/          # HomeView
+│   │   ├── router/
+│   │   └── assets/styles/
+│   └── public/icons/       # SVG іконки
 ├── docker/
 │   ├── nginx/default.conf
 │   └── php/Dockerfile

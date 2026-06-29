@@ -3,8 +3,6 @@
 up:
 	docker compose up -d
 
-up-frontend:
-	docker compose --profile frontend up -d
 
 down:
 	docker compose down
