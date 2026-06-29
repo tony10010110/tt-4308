@@ -51,14 +51,10 @@ onMounted(async () => {
 .home-layout {
   height: 100vh;
   overflow: hidden;
-  background-color: var(--color-bg);
-  display: flex;
-  flex-direction: column;
 }
 
 .home-main {
-  flex: 1;
-  padding-top: var(--header-height);
+  height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
