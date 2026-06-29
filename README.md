@@ -74,7 +74,15 @@ mounty_node    Up
 
 ---
 
-## 4. Генерація APP_KEY
+## 4. Встановлення PHP залежностей
+
+```bash
+docker compose exec app composer install
+```
+
+---
+
+## 5. Генерація APP_KEY
 
 ```bash
 docker compose exec app php artisan key:generate
@@ -82,7 +90,7 @@ docker compose exec app php artisan key:generate
 
 ---
 
-## 5. Міграції та наповнення БД
+## 6. Міграції та наповнення БД
 
 ```bash
 make migrate
@@ -104,7 +112,7 @@ docker compose exec app php artisan db:seed
 
 ---
 
-## 6. Права на папку storage
+## 7. Права на папку storage
 
 Якщо бачиш помилку `Permission denied` при вході в адмінку:
 
@@ -114,7 +122,7 @@ docker compose exec app chmod -R 775 storage bootstrap/cache
 
 ---
 
-## 7. Перевірка сайту
+## 8. Перевірка сайту
 
 | Сторінка | URL |
 |----------|-----|
@@ -124,7 +132,7 @@ docker compose exec app chmod -R 775 storage bootstrap/cache
 
 ---
 
-## 8. Адмін панель
+## 9. Адмін панель
 
 Перейди на: **http://localhost:8080/admin/login**
 
@@ -146,7 +154,7 @@ docker compose exec app chmod -R 775 storage bootstrap/cache
 
 ---
 
-## 9. Корисні команди Make
+## 10. Корисні команди Make
 
 ```bash
 make up          # запустити контейнери
@@ -165,7 +173,7 @@ make test        # запустити тести
 
 ---
 
-## 10. Підключення до БД (PhpStorm / DBeaver)
+## 11. Підключення до БД (PhpStorm / DBeaver)
 
 ```
 Host:     127.0.0.1
