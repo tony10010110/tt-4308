@@ -97,4 +97,10 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
   background-color: var(--color-red);
   padding-left: 20px;
 }
+
+@media (max-width: 768px) {
+  .app-nav {
+    display: none;
+  }
+}
 </style>

@@ -26,12 +26,11 @@ const bgStyle = computed(() => {
   return { backgroundImage: `url(${src})` }
 })
 
-// Convert newlines / existing <p> to <p> tags for per-line sizing
 const titleHtml = computed(() => {
   const raw = (props.title || '').replace(/<p>/gi, '\n').replace(/<\/p>/gi, '')
   return raw.trim().split('\n').filter(Boolean)
-    .map(line => `<p>${line.trim()}</p>`)
-    .join('')
+      .map(line => `<p>${line.trim()}</p>`)
+      .join('')
 })
 
 const contentEl = ref(null)
@@ -39,14 +38,31 @@ const titleEl   = ref(null)
 
 function fitLines() {
   if (!titleEl.value || !contentEl.value) return
-  const availableWidth = contentEl.value.offsetWidth
+
+  const style = getComputedStyle(contentEl.value)
+  const padL  = parseFloat(style.paddingLeft)  || 0
+  const padR  = parseFloat(style.paddingRight) || 0
+  const availableWidth = contentEl.value.offsetWidth - padL - padR
   if (!availableWidth) return
 
-  titleEl.value.querySelectorAll('p').forEach(p => {
-    p.style.fontSize = '200px'
-    const naturalWidth = p.scrollWidth
-    const fitted = Math.floor(availableWidth / naturalWidth * 200)
-    p.style.fontSize = fitted + 'px'
+  const paragraphs = [...titleEl.value.querySelectorAll('p')]
+
+  paragraphs.forEach(p => {
+    let lo = 8, hi = 600
+
+    while (lo < hi - 1) {
+      const mid = Math.floor((lo + hi) / 2)
+      p.style.fontSize   = mid + 'px'
+      p.style.whiteSpace = 'nowrap'
+
+      titleEl.value.getBoundingClientRect() // force reflow
+
+      if (p.scrollWidth <= availableWidth) lo = mid
+      else hi = mid
+    }
+
+    p.style.fontSize   = lo + 'px'
+    p.style.whiteSpace = 'nowrap'
   })
 }
 
@@ -66,7 +82,6 @@ function scrollTo(href) {
   if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
-
 <style scoped>
 .hero {
   position: relative;
