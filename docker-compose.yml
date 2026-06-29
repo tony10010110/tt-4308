@@ -5,49 +5,63 @@ services:
     build:
       context: .
       dockerfile: docker/php/Dockerfile
-    container_name: mountly_app
+    container_name: mounty_app
     restart: unless-stopped
     working_dir: /var/www/backend
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: mounty_db
+      DB_USERNAME: mounty_user
+      DB_PASSWORD: mounty_password
     volumes:
       - ./backend:/var/www/backend
+      - media_storage:/var/www/backend/storage/app/public
     networks:
-      - mountly_network
+      - mounty_network
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   nginx:
     image: nginx:alpine
-    container_name: mountly_nginx
+    container_name: mounty_nginx
     restart: unless-stopped
     ports:
       - "8080:80"
     volumes:
       - ./backend:/var/www/backend
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - media_storage:/var/www/backend/storage/app/public
     networks:
-      - mountly_network
+      - mounty_network
     depends_on:
       - app
 
   mysql:
     image: mysql:8.0
-    container_name: mountly_mysql
+    container_name: mounty_mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: mountly_db
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: mountly_user
-      MYSQL_PASSWORD: mountly_password
+      MYSQL_DATABASE: mounty_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: mounty_user
+      MYSQL_PASSWORD: mounty_password
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
-      - mountly_network
+      - mounty_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-umounty_user", "-pmounty_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   node:
     image: node:20-alpine
-    container_name: mountly_node
+    container_name: mounty_node
     working_dir: /app
     volumes:
       - ./frontend:/app
@@ -55,11 +69,14 @@ services:
       - "5173:5173"
     command: sh -c "npm install && npm run dev -- --host"
     networks:
-      - mountly_network
+      - mounty_network
+    profiles:
+      - frontend
 
 networks:
-  mountly_network:
+  mounty_network:
     driver: bridge
 
 volumes:
   mysql_data:
+  media_storage:
