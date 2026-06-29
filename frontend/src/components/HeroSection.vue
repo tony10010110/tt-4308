@@ -173,6 +173,11 @@ function scrollTo(href) {
 }
 
 @media (max-width: 768px) {
+  .hero {
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
   .hero__content {
     padding: 0 24px 60px 24px;
     max-width: 100%;
