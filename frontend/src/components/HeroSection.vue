@@ -81,7 +81,7 @@ function scrollTo(href) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 80px 80px 0;
+  padding: 0 150px 150px 0;
   max-width: 640px;
 }
 
