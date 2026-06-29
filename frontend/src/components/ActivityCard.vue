@@ -12,12 +12,11 @@
           :src="icon"
           :alt="label"
           class="activity-card__icon-img"
-          :class="{ 'is-filled': isOpen }"
         />
       </div>
 
       <!-- Label — visible only when open -->
-      <p v-if="isOpen" class="activity-card__label">{{ label }}</p>
+      <p v-show="isOpen" class="activity-card__label">{{ label }}</p>
     </div>
   </button>
 </template>
@@ -102,5 +101,53 @@ defineEmits(['select'])
   text-align: center;
   color: var(--color-white);
   max-width: 240px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s 0.2s, transform 0.3s 0.2s;
+}
+
+.activity-card.is-open .activity-card__label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .activity-card {
+    flex: none;
+    width: 100%;
+    height: 72px;
+    padding: 0 24px;
+    flex-direction: row;
+    justify-content: flex-start;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .activity-card:last-child {
+    border-bottom: none;
+  }
+
+  .activity-card.is-open {
+    width: 100%;
+    height: auto;
+    padding: 24px;
+  }
+
+  .activity-card__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .activity-card__icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .activity-card__label {
+    text-align: left;
+    max-width: none;
+  }
 }
 </style>
