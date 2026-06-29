@@ -1,5 +1,8 @@
 /* ─── Design tokens ──────────────────────────────────────────── */
 :root {
+  /* FAQ page fonts */
+  --font-tactic: 'TacticSans', 'Barlow Condensed', 'Oswald', system-ui, sans-serif;
+  --font-tektur: 'Tektur', 'Barlow', system-ui, sans-serif;
   /* Colors */
   --color-bg:        #131313;
   --color-red:       #dd3030;
@@ -33,6 +36,17 @@ html, body {
   overflow: hidden;
 }
 
+/* FAQ page needs scroll */
+body.faq-page,
+body.faq-page html {
+  overflow: auto;
+  height: auto;
+}
+
+body.faq-page #app {
+  height: auto;
+}
+
 body {
   font-family: var(--font-primary);
   background-color: var(--color-bg);
@@ -61,7 +75,24 @@ img {
   max-width: 100%;
 }
 
-/* ─── Font face (add your TT Firs Neue files to assets/fonts/) ─ */
+/* ─── Font face (add font files to assets/fonts/) ───────────── */
+@font-face {
+  font-family: 'TacticSans';
+  src: url('../fonts/TacticSans-Bld.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TacticSans';
+  src: url('../fonts/TacticSans-Med.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @font-face {
   font-family: 'TT Firs Neue';
   src: url('../fonts/TTFirsNeue-Bold.woff2') format('woff2');

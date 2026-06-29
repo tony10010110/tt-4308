@@ -2,7 +2,13 @@
   <nav class="app-nav" aria-label="Головна навігація">
     <ul class="app-nav__list">
       <li v-for="item in navItems" :key="item.id" class="app-nav__item">
+        <router-link
+          v-if="item.external"
+          :to="item.href"
+          class="app-nav__link"
+        >{{ item.label }}</router-link>
         <a
+          v-else
           :href="item.href"
           class="app-nav__link"
           :class="{ 'is-active': activeSection === item.id }"
@@ -11,6 +17,7 @@
           {{ item.label }}
         </a>
       </li>
+
     </ul>
   </nav>
 </template>
@@ -23,7 +30,7 @@ const navItems = [
   { id: 'about',     label: 'ПРО МАУНТІ',  href: '#about' },
   { id: 'equipment', label: 'СПОРЯДЖЕННЯ', href: '#equipment' },
   { id: 'routes',    label: 'МАРШРУТИ',    href: '#routes' },
-  { id: 'faq',       label: 'FAQ',         href: '#faq' },
+  { id: 'faq',       label: 'FAQ',         href: '/faq', external: true },
 ]
 
 const activeSection = ref('')
