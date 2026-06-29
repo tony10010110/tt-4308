@@ -2,8 +2,8 @@
   <section class="hero" id="hero">
     <div class="hero__bg" :style="bgStyle" />
 
-    <div class="hero__content">
-      <h1 class="hero__title" v-html="title"></h1>
+    <div class="hero__content" ref="contentEl">
+      <h1 class="hero__title" ref="titleEl" v-html="titleHtml"></h1>
       <a :href="buttonUrl" class="hero__cta" @click.prevent="scrollTo(buttonUrl)">
         {{ buttonText }}
       </a>
@@ -12,20 +12,69 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 
 const props = defineProps({
-  title:      { type: String, default: '<p>МААААМ, Я</p><p>В КАРПАТИ</p>' },
+  title:      { type: String, default: 'МААААМ, Я\nВ КАРПАТИ' },
   buttonText: { type: String, default: 'ДІЗНАТИСЯ БІЛЬШЕ' },
   buttonUrl:  { type: String, default: '#routes' },
   bgImage:    { type: String, default: '' },
 })
 
-// Use API image if available, otherwise fall back to local asset
 const bgStyle = computed(() => {
   const src = props.bgImage || '/images/hero-bg.jpg'
   return { backgroundImage: `url(${src})` }
 })
+
+const titleHtml = computed(() => {
+  const raw = (props.title || '').replace(/<p>/gi, '\n').replace(/<\/p>/gi, '')
+  return raw.trim().split('\n').filter(Boolean)
+      .map(line => `<p>${line.trim()}</p>`)
+      .join('')
+})
+
+const contentEl = ref(null)
+const titleEl   = ref(null)
+
+function fitLines() {
+  if (!titleEl.value || !contentEl.value) return
+
+  const style = getComputedStyle(contentEl.value)
+  const padL  = parseFloat(style.paddingLeft)  || 0
+  const padR  = parseFloat(style.paddingRight) || 0
+  const availableWidth = contentEl.value.offsetWidth - padL - padR
+  if (!availableWidth) return
+
+  const paragraphs = [...titleEl.value.querySelectorAll('p')]
+
+  paragraphs.forEach(p => {
+    let lo = 8, hi = 600
+
+    while (lo < hi - 1) {
+      const mid = Math.floor((lo + hi) / 2)
+      p.style.fontSize   = mid + 'px'
+      p.style.whiteSpace = 'nowrap'
+
+      titleEl.value.getBoundingClientRect() // force reflow
+
+      if (p.scrollWidth <= availableWidth) lo = mid
+      else hi = mid
+    }
+
+    p.style.fontSize   = lo + 'px'
+    p.style.whiteSpace = 'nowrap'
+  })
+}
+
+let ro
+onMounted(async () => {
+  await nextTick()
+  fitLines()
+  ro = new ResizeObserver(fitLines)
+  ro.observe(contentEl.value)
+})
+onUnmounted(() => ro?.disconnect())
+watch(titleHtml, async () => { await nextTick(); fitLines() })
 
 function scrollTo(href) {
   if (!href.startsWith('#')) return
@@ -33,7 +82,6 @@ function scrollTo(href) {
   if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
-
 <style scoped>
 .hero {
   position: relative;
@@ -50,7 +98,6 @@ function scrollTo(href) {
   inset: 0;
   background-size: cover;
   background-position: center;
-  /* Gradient fallback while image loads or if image is missing */
   background-color: #263d2a;
   background-image:
     linear-gradient(
@@ -82,20 +129,25 @@ function scrollTo(href) {
   flex-direction: column;
   align-items: flex-start;
   padding: 0 150px 150px 0;
+  width: 100%;
   max-width: 640px;
 }
 
 .hero__title {
   font-family: var(--font-primary);
   font-weight: 700;
-  font-size: clamp(56px, 8vw, 100px);
   line-height: 0.9;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--color-white);
-  white-space: pre-line;
   margin-bottom: 32px;
   width: 100%;
+}
+
+.hero__title p {
+  white-space: nowrap;
+  display: block;
+  line-height: 0.9;
 }
 
 .hero__cta {
@@ -123,10 +175,6 @@ function scrollTo(href) {
   .hero__content {
     padding: 0 24px 60px 24px;
     max-width: 100%;
-  }
-
-  .hero__title {
-    font-size: clamp(40px, 12vw, 64px);
   }
 }
 </style>
