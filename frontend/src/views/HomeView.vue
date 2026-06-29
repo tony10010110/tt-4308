@@ -22,7 +22,7 @@ import AppNav from '@/components/AppNav.vue'
 import HeroSection from '@/components/HeroSection.vue'
 
 const hero = ref({
-  title:       'МААААМ, Я\nВ КАРПАТИ',
+  title:      '<p>МААААМ, Я</p><p>В КАРПАТИ</p>' ,
   button_text: 'ДІЗНАТИСЯ БІЛЬШЕ',
   button_url:  '#routes',
   background:  '',

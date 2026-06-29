@@ -3,7 +3,7 @@
     <div class="hero__bg" :style="bgStyle" />
 
     <div class="hero__content">
-      <h1 class="hero__title">{{ title }}</h1>
+      <h1 class="hero__title" v-html="title"></h1>
       <a :href="buttonUrl" class="hero__cta" @click.prevent="scrollTo(buttonUrl)">
         {{ buttonText }}
       </a>
@@ -15,7 +15,7 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  title:      { type: String, default: 'МААААМ, Я\nВ КАРПАТИ' },
+  title:      { type: String, default: '<p>МААААМ, Я</p><p>В КАРПАТИ</p>' },
   buttonText: { type: String, default: 'ДІЗНАТИСЯ БІЛЬШЕ' },
   buttonUrl:  { type: String, default: '#routes' },
   bgImage:    { type: String, default: '' },
@@ -95,6 +95,7 @@ function scrollTo(href) {
   color: var(--color-white);
   white-space: pre-line;
   margin-bottom: 32px;
+  width: 100%;
 }
 
 .hero__cta {
