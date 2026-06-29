@@ -72,6 +72,12 @@ mounty_nginx   Up
 mounty_node    Up
 ```
 
+> **Якщо `mounty_app` постійно рестартує** — перевір логи:
+> ```bash
+> docker compose logs app
+> ```
+> Найчастіша причина: відсутній `vendor/` (не встановлені залежності). Вирішення нижче в кроці 4.
+
 ---
 
 ## 4. Встановлення PHP залежностей
@@ -79,6 +85,15 @@ mounty_node    Up
 ```bash
 docker compose exec app composer install
 ```
+
+> ⚠️ Якщо контейнер `app` рестартує і не дає виконати команду — зупини автозапуск міграцій:
+> ```bash
+> docker compose stop app
+> docker compose run --rm --entrypoint sh app
+> composer install
+> exit
+> docker compose up -d
+> ```
 
 ---
 
@@ -104,37 +119,31 @@ docker compose exec app php artisan migrate
 docker compose exec app php artisan db:seed
 ```
 
-> **Якщо при seed виникає помилка** `Table 'personal_access_tokens' doesn't exist`:
+> **Права на storage** — якщо бачиш `Permission denied`:
 > ```bash
-> docker compose exec app php artisan migrate --path=vendor/laravel/sanctum/database/migrations
-> make seed
+> docker compose exec app chmod -R 775 storage bootstrap/cache
+> docker compose exec app chown -R www-data:www-data storage bootstrap/cache
 > ```
 
 ---
 
-## 7. Права на папку storage
+## 7. Перевірка сайту
 
-Якщо бачиш помилку `Permission denied` при вході в адмінку:
+> ⚠️ Архітектура: **бекенд** (Laravel API) та **фронтенд** (Vue SPA) працюють на різних портах.
 
-```bash
-docker compose exec app chmod -R 775 storage bootstrap/cache
-```
+| Сторінка | URL | Сервер |
+|----------|-----|--------|
+| Головна | http://localhost:5173 | Vite (фронтенд) |
+| FAQ | http://localhost:5173/faq | Vite (фронтенд) |
+| API | http://localhost:8080/api/v1 | Nginx (бекенд) |
 
----
-
-## 8. Перевірка сайту
-
-| Сторінка | URL |
-|----------|-----|
-| Головна | http://localhost:8080 |
-| FAQ | http://localhost:8080/faq |
-| Vite dev server | http://localhost:5173 |
+**Фронтенд завжди відкривай на порту `:5173`**, а не `:8080`.
 
 ---
 
-## 9. Адмін панель
+## 8. Адмін панель
 
-Перейди на: **http://localhost:8080/admin/login**
+Перейди на: **http://localhost:5173/admin/login**
 
 | Поле | Значення |
 |------|----------|
@@ -145,12 +154,12 @@ docker compose exec app chmod -R 775 storage bootstrap/cache
 
 | Розділ | URL |
 |--------|-----|
-| Dashboard | `/admin` |
-| Hero секція | `/admin/hero` |
-| Маршрути | `/admin/routes` |
-| Спорядження | `/admin/equipment` |
-| Ціни | `/admin/prices` |
-| FAQ | `/admin/faq` |
+| Dashboard | http://localhost:5173/admin |
+| Hero секція | http://localhost:5173/admin/hero |
+| Маршрути | http://localhost:5173/admin/routes |
+| Спорядження | http://localhost:5173/admin/equipment |
+| Ціни | http://localhost:5173/admin/prices |
+| FAQ | http://localhost:5173/admin/faq |
 
 ---
 
