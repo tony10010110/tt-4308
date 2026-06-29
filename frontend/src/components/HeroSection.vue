@@ -38,7 +38,7 @@ function scrollTo(href) {
 .hero {
   position: relative;
   width: 100%;
-  height: calc(100vh - var(--header-height));
+  height: 100vh;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;

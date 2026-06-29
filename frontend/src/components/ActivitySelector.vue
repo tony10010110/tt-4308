@@ -52,9 +52,8 @@ function toggle(type) {
 <style scoped>
 .activity-selector {
   display: flex;
-  height: 440px;
+  height: 520px;
   border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
   overflow: hidden;
 }
 
