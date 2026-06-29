@@ -139,6 +139,16 @@ docker compose exec app php artisan db:seed
 
 **Фронтенд завжди відкривай на порту `:5173`**, а не `:8080`.
 
+> **Якщо `localhost:5173` недоступний або показує помилку** — перезапусти node контейнер:
+> ```bash
+> docker compose restart node
+> ```
+> Якщо помилка пов'язана з правами на `.vite/`:
+> ```bash
+> docker compose exec node chmod -R 777 /app/.vite
+> docker compose restart node
+> ```
+
 ---
 
 ## 8. Адмін панель
